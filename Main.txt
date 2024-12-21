@@ -1,0 +1,61 @@
+import java.util.*;
+
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+
+      
+        System.out.print("Enter Tax categories: ");
+        int Tax_categories = sc.nextInt();
+        int[] GST = new int[Tax_categories];
+        for (int L = 0; L < Tax_categories; L++) {
+            System.out.print("Tax rate of C" + (L + 1) + " : ");
+            GST[L] = sc.nextInt();
+        }
+
+       
+        System.out.print("Enter Number of products: ");
+        int Number_of_products = sc.nextInt();
+        System.out.println("Enter details in format of product_name, GST_Category, Unit_price:");
+
+
+        String[] product_name = new String[Number_of_products];
+        int[] category = new int[Number_of_products];
+        int[] unit_price = new int[Number_of_products];
+
+        for (int i = 0; i < Number_of_products; i++) {
+            product_name[i] = sc.next(); 
+            category[i] = sc.nextInt() -1;
+            unit_price[i] = sc.nextInt();
+        }
+
+   
+        System.out.print("Enter number of customers in the queue: ");
+        int queue = sc.nextInt();
+        for (int i = 1; i <= queue; i++) {
+            System.out.print("Enter the number of items in customer " + i + " basket: ");
+            int Number_of_units = sc.nextInt();
+            double total_bill = 0 , bill = 0; 
+            System.out.print("Enter customer "+ i+" purchased items in item_name, quantity : \n");
+
+            for (int j = 0; j < Number_of_units; j++) {
+                String item_name = sc.next();
+                int quantity = sc.nextInt();
+
+                
+                for (int k = 0; k < Number_of_products; k++) {
+                    if (product_name[k].equals(item_name)) {
+                        double price = unit_price[k] * quantity;
+                        double tax = price * GST[category[k]] / 100;
+                        bill = price + tax;
+                        total_bill = total_bill + bill;
+                        break;
+                    }
+                }
+            }
+            System.out.println(Math.round(total_bill*10.0)/10.0);
+        }
+    }
+}
